@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<!--   -->
+<html>
+  <head>
+    <title>Ajax</title>
+    <meta charset="utf-8"/>
+    <style type="text/css">
+
+    </style>
+    <script src="https://code.jquery.com/jquery-2.1.3.min.js"></script>
+  </head>
+  
+  <body>  
+
+
+                        <div>
+                          Simple Or Complex:
+              <input type="radio" id="simple" name="eating" value="simple"  checked="checked">
+              <label for="binary">Simple</label>
+              <input type="radio" id="complex" name="eating" value="complex">
+              <label for="complex">Complex</label>
+                        </div>
+
+
+    	<input id="select" type="button" value="Select" />
+      <br>
+              <div id="output"></div> 
+
+    <script>   
+
+      function success(data) { 
+      }
+      function simpOrCompCheck(data) {
+        console.log("simpOrCompCheck " + data.simpOrCompVal);
+          let radios = $('input:radio[name=eating]');
+        if (data.simpOrCompVal == 0)
+            radios.filter('[value=simple]').prop('checked', true); 
+        else if (data.simpOrCompVal == 1)
+            radios.filter('[value=complex]').prop('checked', true);   
+      }
+  		
+  		function SimpOrCompCall(){
+		    $.get("/simpOrCompChange", {val:$('input[name=eating]:checked').val()},success);
+  		  return false;
+  		}
+  		
+  		$(document).ready(function(){ 
+        $.get("/simpOrCompCheck",simpOrCompCheck);
+
+
+  		  $("#select").click(SimpOrCompCall);
+  		});  		
+    </script>  	
+  </body>
+</html>  
+  
